@@ -15,9 +15,6 @@ This Docker contains a customisation of GraphDB which can parse Conjectures appr
 |-- README.txt
 ```
 
-## DOCKER LOGIN
-docker login
-
 ## BUILD THE DOCKER
 docker build -t my-custom-graphdb:1.0 .
 
