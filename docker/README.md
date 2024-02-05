@@ -2,7 +2,8 @@
 This Docker contains a customisation of GraphDB which can parse Conjectures approach. Additionally, the GraphDB instance contains all datasets used to perform the efficiency assessment of existing reification methods.   
 
 We produced several docker depending on the testing instance you want to run.
-- Docker **ready to run**: it contains D1 and D2 datasets excluding singleton
+- Docker **ready to run**: it contains D1 and D2 datasets excluding singleton 
+(Docker size 17GB)
 - Docker **slow to run**: it contains D1, D2 and D3
 
 
