@@ -88,7 +88,7 @@ In the case of Conjectures (both strong and weak form) this logic is slightly di
 - If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (both asserted and non-asserted).
 - If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (both asserted and non-asserted).
 
-## Conversion approach
+### Converting JSON files via Wikidata Converter App
 - The assertion vs non-assertion logic has been translated into a set of templates each of which has been customised to convert the JSON files in $Dn, \; n \in [1, 3]$ in one of the selected EWA approaches. Such templates are written in [Handelbars syntax](https://handlebarsjs.com/). All templates are available in ```data_conversion/handlebars_templates```. This set of templates has been used to convert **Art** and **Random** claims.
 - Similarly, another set of templates which are available at ```data_conversion/handlebars_templates_dummy``` has been designed to convert JSON files in $Dn, \; n \in [1, 3]$ storing the **Dummy** claims. 
 - Such Handlebar templates can be uploaded via an interface in a Node.js application designed for the purpose. An online version of the web app can be found at [https://www.fabiovitali.it/wikidataconverter/](https://www.fabiovitali.it/wikidataconverter/). In particular, the web app receives a JSON datasets and the handlebars templates and produces a RDF dataset with the data provided in the JSON dataset following the rules expressed in the handlebar templates.
@@ -111,12 +111,6 @@ In the table below we provide some data about our datasets. At the end of this p
 | Dn-nGraphs        | TriG              | Named graphs                | via ranking     | 28,896,268           |
 | Dn-conjWeak       | TriG              | Conjectures - weak form     | yes             | 29,199,650           |
 | Dn-Singleton      | Turtle            | Singleton properties        | yes             | 55,325,270           |
-
-<!-- TOC --><a name="converting-json-files-via-wikidata-converter-app"></a>
-### Converting JSON files via Wikidata Converter App
-The downloaded json files from Wikidata can be trasformed into RDF format with the online converter
-- Download the application from  [LINK AL COVERTER AGGIORNATO].
-
 
 <!-- TOC --><a name="example-output-rdf-files-out-of-handlebars-templates"></a>
 ### Example output RDF files out of handlebars templates
