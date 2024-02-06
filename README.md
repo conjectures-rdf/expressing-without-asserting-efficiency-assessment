@@ -1,6 +1,6 @@
 # EWA-efficiency
 
-This repository contains all files to evaluate Expressing Without Asserting (EWA) approaches in RDF. 
+This repository contains all files to evaluate Expressing Without Asserting (EWA) approaches in RDF.
 
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
@@ -26,11 +26,7 @@ This repository contains all files to evaluate Expressing Without Asserting (EWA
 
 The dataset on which these experiments have been run is composed as follows and has been named D3:
 
-- **Art**: A thematic set of claims about 300k artwork entities in Wikidata (i.e., painting, manuscripts, books). This corresponds to about 10% of all artwork entities currently present inside Wikidata.
-- **Random**: after considerable deliberation, we concluded that adding some kind of entropy to the dataset would make it more representative. This dataset contains the claims of 300k Wikidata random entities.
-- **Dummy**: a selection of dummy statements regarding the artwork attributions (represented by the property `wdt:P50` and `wdt:P170` and including from 1 to 4 authors in each claim and the source of the claim) and artworks locations (represented by the property `wdt:P276`, including 1 possible location, time constraints and source) has been created. Those new statements contain dummy arbitrary information ranked as deprecated and therefore non-asserted to represent alternative or historical claims to those contained in Art dataset. This design choice was made to increase the number of conjectural statements in the final dataset.
-
-**Art** and **Random** datasets have been collected via [Wikidata API](https://www.wikidata.org/wiki/Wikidata:REST_API) in JSON format. Entities have been selected from Wikidata SPARQL endpoint with the following queries:
+- **Art**: A thematic set of claims about 300k artwork entities in Wikidata (i.e., painting, manuscripts, books). This corresponds to about 10% of all artwork entities currently present inside Wikidata. Scipts are available at `data_acquisition/art_statements`.
 
 ```
 # Artworks  
@@ -39,6 +35,9 @@ SELECT DISTINCT ?artwork ?type WHERE {
     ?type (wdt:P279*) wd:Q838948. hint:Prior hint:rangeSafe true
 }
 ```
+
+- **Random**: after considerable deliberation, we concluded that adding some kind of entropy to the dataset would make it more representative. This dataset contains the claims of 300k Wikidata random entities. Scripts are available at `data_acquisition/random_statements`.
+
 ```
 # Random
 SELECT DISTINCT * WHERE {
@@ -48,7 +47,9 @@ SELECT DISTINCT * WHERE {
 LIMIT 3000000
 ```
 
-**Dummy statements** have been programmatically produced via Python scripts, all scripts and detailed description is provided in folder `data_acquisition/dummy_statements`
+- **Dummy**: a selection of dummy statements regarding the artwork attributions (represented by the property `wdt:P50` and `wdt:P170` and including from 1 to 4 authors in each claim and the source of the claim) and artworks locations (represented by the property `wdt:P276`, including 1 possible location, time constraints and source) has been created. Those new statements contain dummy arbitrary information ranked as deprecated and therefore non-asserted to represent alternative or historical claims to those contained in Art dataset. This design choice was made to increase the number of conjectural statements in the final dataset. Dummy statements have been programmatically produced via Python scripts, all scripts and detailed description is provided in folder `data_acquisition/dummy_statements`.
+
+**Art** and **Random** datasets have been collected via [Wikidata API](https://www.wikidata.org/wiki/Wikidata:REST_API) in JSON format. Entities have been selected from Wikidata SPARQL endpoint with the following queries:
 
 Each statement has been added into a json file which has the same structure as the wikidata json which can be retreived from the Wikidata API. (by the script randomic_statements.py). Each statement ranking corresponds to "Deprecated". Each statement has also a star time date and a end time date to qualify the period when the artwork has been located in the location expressed by the statement (e.g. Mona Lisa location was "Museo della Storia di Bologna" (```wd:Q55107400```) from 10 april 1903 to 13 may 1904).
 DISCLAIMER: Dates are complitely random, this means that the artwork's inception can be postumous confronting the start date of its location.
@@ -62,7 +63,7 @@ DATASET C NOW CONTAINS:
 - avg. 4 statements added to each artwork
 - 2,35 GB size of all the json files created with ```randomic_statements.py```
 
-Note: these counts has been made trough the ```counter.py``` script, available in this folder
+Note: these counts has been made trough the ```counter.py``` script, available in this folder.
 
 An excellent way to evaluate an algorithm’s performance is to observe how it responds to variations in input size [@Orlandi2021BenchmarkingRM]. We started by downloading the whole subset of artwork entities, related individuals (basically, attributed authors), and locations. This dataset, called D4, is composed of about 3,5 million artwork entities and 188 thousand related entities (humans and locations). We have not used this dataset for our comparison due to the excessive number of timeouts in many of the queries and methods we used. Thus we scaled the dataset logarithmically in three further sizes:
 
@@ -84,16 +85,16 @@ We then surveyed the state of the art regarding reification methods to express w
 
 <!-- TOC --><a name="conversion-rationale"></a>
 ### Assertion vs. Non-Assertion Logic
-In Wikidata, assertion or non assertion of claims is strictly dependent from their rankings. 
+In Wikidata, assertion or non assertion of claims is strictly dependent from their rankings.
 
-For example, the triples (1)```wd:Q10743 wdt:P214 "249422654"``` and (2)```wd:Q10743 wdt:P214 "315523483"``` share the same subject-predicate values, but differ wrt their objects. 
+For example, the triples (1)```wd:Q10743 wdt:P214 "249422654"``` and (2)```wd:Q10743 wdt:P214 "315523483"``` share the same subject-predicate values, but differ wrt their objects.
 
 - If both triples (1 and 2) are ranked as Normal, they are both asserted.
 - If both triples (1 and 2) are ranked as Preferred, they are both asserted.
 - If both triples (1 and 2) are ranked as Deprecated, they are both non-asserted.
-- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is asserted and the second (2) is non-asserted. 
-- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) in non-asserted and the second (2) is asserted. 
-- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is non-asserted and the second (2) is asserted. 
+- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is asserted and the second (2) is non-asserted.
+- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) in non-asserted and the second (2) is asserted.
+- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is non-asserted and the second (2) is asserted.
 
 <!-- TOC --><a name="additional-materials"></a>
 ### Additional materials
@@ -103,14 +104,14 @@ For example, the triples (1)```wd:Q10743 wdt:P214 "249422654"``` and (2)```wd:Q1
 
 <!-- TOC --><a name="converting-json-files-via-wikidata-converter-app"></a>
 ### Converting JSON files via Wikidata Converter App
-The downloaded json files from Wikidata can be trasformed into RDF format with the online converter 
+The downloaded json files from Wikidata can be trasformed into RDF format with the online converter
 - Download the application from  [LINK AL COVERTER AGGIORNATO].
 - Start the application by simply starting node with the command ```node app.js```, the interface will be available in your browser at port ```3000```.
 - In the interface, upload the templates (available in folder ```handlebars_templates``` and ```handlebars_templates_fake```) or fill the dedicated forms.
-- Use "Bulk convert" function to upload a .zip archive containing all jsons. 
-    - Note. Do not upload a .zip file grater than 2GB. 
-    - Note 2. If the process stops, allocate more RAM space in the cmd with the command ```node --max-old-space-size=12288 app.js``` to run again the application. 
-- A .zip folder will be automatically downloaded. This archive contains all RDF files converted against your chosen templates. 
+- Use "Bulk convert" function to upload a .zip archive containing all jsons.
+    - Note. Do not upload a .zip file grater than 2GB.
+    - Note 2. If the process stops, allocate more RAM space in the cmd with the command ```node --max-old-space-size=12288 app.js``` to run again the application.
+- A .zip folder will be automatically downloaded. This archive contains all RDF files converted against your chosen templates.
 
 <!-- TOC --><a name="example-output-rdf-files-out-of-handlebars-templates"></a>
 ### Example output RDF files out of handlebars templates
@@ -140,7 +141,7 @@ Each converted dataset is exemplified below with two different examples:
 2) The second represents three statements (_Germany has diplomatic relation with Taiwan_, _Germany has diplomatic relation with Bhutan_ (unconfirmed statement), _Germany has diplomatic relation with Cape Verde_) respectively rankes as normal (non asserted), deprecated (non asserted), preferred (asserted)
 
 <!-- TOC --><a name="wikidata"></a>
-#### Wikidata 
+#### Wikidata
 
 ```
 wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
@@ -148,10 +149,10 @@ wd:Q183 p:P1705 s:Q183-d657d418-4a25-98d6-5180-a3659a11fbcd .
 s:Q183-d657d418-4a25-98d6-5180-a3659a11fbcd a wikibase:Statement;                                  
     ps:P1705 "Bundesrepublik Deutschland"@de;
     wikibase:rank wikibase:NormalRank.                                   
-    
+
 wd:Q183 wdt:P1705 "Deutschland"@de.      
 wd:Q183 p:P1705 s:Q183$E2A638D7-78B7-424D-9F63-AF49F5DCAE84 .
-s:Q183-E2A638D7-78B7-424D-9F63-AF49F5DCAE84 a wikibase:Statement; 
+s:Q183-E2A638D7-78B7-424D-9F63-AF49F5DCAE84 a wikibase:Statement;
     ps:P1705 "Deutschland"@de;
     wikibase:rank wikibase:NormalRank.
 ```    
@@ -165,15 +166,15 @@ s:Q183-DF432913-CEBA-49ED-BCA4-7214957E6CDA a wikibase:Statement;
     wikibase:rank wikibase:NormalRank.
 
 wd:Q183 p:P530 s:Q183-a6aa383f-4c30-79bf-0767-dcf4ea80f8d6 .
-s:Q183-a6aa383f-4c30-79bf-0767-dcf4ea80f8d6 a wikibase:Statement; 
+s:Q183-a6aa383f-4c30-79bf-0767-dcf4ea80f8d6 a wikibase:Statement;
     pq:P805 wd:Q1201896;
     pq:P2241 wd:Q28831311;
     ps:P530 wd:Q917;
     wikibase:rank wikibase:DeprecatedRank.
-     
+
 wd:Q183 wdt:P530 wd:Q1011.
 wd:Q183 p:P530 s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 .
-s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 a wikibase:Statement; 
+s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 a wikibase:Statement;
     pq:P805 wd:Q28498636;
     pq:P531 wd:Q58003162;
     ps:P530 wd:Q1011;
@@ -186,29 +187,29 @@ Note: With named graphs all statements are asserted.
 Note2: Since Named Graphs allows for statements groupings, when all statements are ranked as Normal (or all has the same qualifiers) as the case below, they can be grouped in the same graph without changing any statement meaning.
 
 ```
-GRAPH s:Q183-d657d418-4a25-98d6-5180-a3659a11fbcd { 
-    wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de 
-    wd:Q183 wdt:P1705 "Deutschland"@de 
+GRAPH s:Q183-d657d418-4a25-98d6-5180-a3659a11fbcd {
+    wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de
+    wd:Q183 wdt:P1705 "Deutschland"@de
 }
 s:Q183-d657d418-4a25-98d6-5180-a3659a11fbcd wikibase:rank wikibase:NormalRank.
 ```
 ```
-GRAPH s:Q183-DF432913-CEBA-49ED-BCA4-7214957E6CDA { 
-wd:Q183 wdt:P530 wd:Q865 
+GRAPH s:Q183-DF432913-CEBA-49ED-BCA4-7214957E6CDA {
+wd:Q183 wdt:P530 wd:Q865
 }
 s:Q183-DF432913-CEBA-49ED-BCA4-7214957E6CDA pq:P805 wd:Q15910813.
 s:Q183-DF432913-CEBA-49ED-BCA4-7214957E6CDA pq:P582 "1972-00-00T00:00:00Z"^^xsd:dateTime.
 s:Q183-DF432913-CEBA-49ED-BCA4-7214957E6CDA pq:P2241 wd:Q26256296.
 s:Q183-DF432913-CEBA-49ED-BCA4-7214957E6CDA wikibase:rank wikibase:NormalRank.
 
-GRAPH s:Q183-a6aa383f-4c30-79bf-0767-dcf4ea80f8d6 { 
-    wd:Q183 wdt:P530 wd:Q917 
+GRAPH s:Q183-a6aa383f-4c30-79bf-0767-dcf4ea80f8d6 {
+    wd:Q183 wdt:P530 wd:Q917
 }
 s:Q183-a6aa383f-4c30-79bf-0767-dcf4ea80f8d6 pq:P805 wd:Q1201896.
 s:Q183-a6aa383f-4c30-79bf-0767-dcf4ea80f8d6 pq:P2241 wd:Q28831311.
 s:Q183-a6aa383f-4c30-79bf-0767-dcf4ea80f8d6 wikibase:rank wikibase:DeprecatedRank.
 
-GRAPH s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 { 
+GRAPH s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 {
     wd:Q183 wdt:P530 wd:Q1011 								
 }
 s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 pq:P805 wd:Q28498636.
@@ -224,7 +225,7 @@ wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
 sng:P417-0 sng:singletonPropertyOf wdt:P417  ;
 sng:P1705-0 sng:singletonPropertyOf wdt:P1705 ;
     wikibase:rank wikibase:NormalRank.
- 
+
 wd:Q183 wdt:P1705 "Deutschland"@de.
 wd:Q183 sng:P1705-1 "Deutschland"@de.
 sng:P1705-1 sng:singletonPropertyOf wdt:P1705  ;
@@ -258,7 +259,7 @@ sng:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 sng:singletonPropertyOf wdt:P530 .
 wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
 <<wd:Q183 wdt:P1705 "Bundesrepublik Deutschland">>
      wikibase:rank wikibase:NormalRank.
-     
+
 wd:Q183 wdt:P1705 "Deutschland"@de.
 <<wd:Q183 wdt:P1705 "Deutschland">>
      wikibase:rank wikibase:NormalRank.
@@ -274,7 +275,7 @@ wd:Q183 wdt:P1705 "Deutschland"@de.
     pq:P805 wd:Q1201896;
     pq:P2241 wd:Q28831311;
     wikibase:rank wikibase:DeprecatedRank.
-     
+
 wd:Q183 wdt:P530 wd:Q1011.
 <<wd:Q183 wdt:P530 wd:Q1011>>
     pq:P805 wd:Q28498636;
@@ -284,7 +285,7 @@ wd:Q183 wdt:P530 wd:Q1011.
 
 <!-- TOC --><a name="conjectures-weak-form"></a>
 #### Conjectures (weak form)
-Note: Since conjectures allows for statements groupings (inheriting it from Named Graphs), when all statements are ranked as Normal (or all has the same qualifiers) as the case below, they can be grouped in the same graph without changing any statement meaning. 
+Note: Since conjectures allows for statements groupings (inheriting it from Named Graphs), when all statements are ranked as Normal (or all has the same qualifiers) as the case below, they can be grouped in the same graph without changing any statement meaning.
 ```
 GRAPH s:Q183-d657d418-4a25-98d6-5180-a3659a11fbcd  {
 wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
@@ -321,7 +322,7 @@ GRAPH s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1  {
 
 GRAPH s:collapseOfQ183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1{
         wd:Q183 wdt:P530 wd:Q1011.
-        s:collapseOfQ183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 conj:collapses s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 
+        s:collapseOfQ183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 conj:collapses s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1
 }
 s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 pq:P805 wd:Q28498636.
 s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 pq:P531 wd:Q58003162.
@@ -337,8 +338,7 @@ To run the experiments take the following steps:
   - ```docker push valentinamomo/conjectures-graphdb-ewa-rtr:tagname```: This docker is **ready to run (RTR)** and can be mounted locally in few minutes. It contains a customised instance of GraphDB to parse and read Conjectures and 10 preloaded datasets to compare its efficiency with concurrent approaches. In particular, this instance contains Wikidata statements, RDF-star, Named Graphs, Conjectures in Weak form, Conjectures in strong form each of which comes in two sizes (D1 and D2). It requires 20GB of free memory space to be used.
   - ```tbd```: This docker is **slow to run (STR)** and can be mounted locally in some hours. It contains a customised instance of GraphDB to parse and read Conjectures and 18 preloaded datasets to compare its efficiency with concurrent approaches. In particular, this instance contains Wikidata statements, RDF-star, Named Graphs, Singleton Properties, Conjectures in Weak form, Conjectures in strong form each of which comes in three sizes (D1, D2 and D3). It requires 0.5T of free memory space to be used.
   - Modifications of GraphDB instances in the dockers are stored in ```conjectures-extension-graphdb```
-  
-- Run locally the code provided in ```XXX``` and locate the ```queries``` in the same folder.
-  - ```queries``` contains the set of queries designed for this experiment and the code to run them 
-  - ```query_exectution_response``` contains partial and final results of query runs which come from this test attempt. 
 
+- Run locally the code provided in ```XXX``` and locate the ```queries``` in the same folder.
+  - ```queries``` contains the set of queries designed for this experiment and the code to run them
+  - ```query_exectution_response``` contains partial and final results of query runs which come from this test attempt.
