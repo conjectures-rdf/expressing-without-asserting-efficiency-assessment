@@ -26,7 +26,7 @@ This repository contains all files to evaluate Expressing Without Asserting (EWA
 
 The dataset on which these experiments have been run is composed as follows and has been named D3:
 
-- **Art**: A thematic set of claims about 300k artwork entities in Wikidata (i.e., painting, manuscripts, books). This corresponds to about 10% of all artwork entities currently present inside Wikidata. Scipts are available at `data_acquisition/art_statements`.
+- **Art**: A thematic set of claims about 300k artwork entities in Wikidata (i.e., painting, manuscripts, books). This corresponds to about 10% of all artwork entities currently present inside Wikidata (see query below). Scipts are available at `data_acquisition/art_statements`.
 
 ```
 # Artworks  
@@ -36,7 +36,7 @@ SELECT DISTINCT ?artwork ?type WHERE {
 }
 ```
 
-- **Random**: after considerable deliberation, we concluded that adding some kind of entropy to the dataset would make it more representative. This dataset contains the claims of 300k Wikidata random entities. Scripts are available at `data_acquisition/random_statements`.
+- **Random**: after considerable deliberation, we concluded that adding some kind of entropy to the dataset would make it more representative. This dataset contains the claims of 300k Wikidata random entities (see query below). Scripts are available at `data_acquisition/random_statements`.
 
 ```
 # Random
@@ -49,27 +49,14 @@ LIMIT 3000000
 
 - **Dummy**: a selection of dummy statements regarding the artwork attributions (represented by the property `wdt:P50` and `wdt:P170` and including from 1 to 4 authors in each claim and the source of the claim) and artworks locations (represented by the property `wdt:P276`, including 1 possible location, time constraints and source) has been created. Those new statements contain dummy arbitrary information ranked as deprecated and therefore non-asserted to represent alternative or historical claims to those contained in Art dataset. This design choice was made to increase the number of conjectural statements in the final dataset. Dummy statements have been programmatically produced via Python scripts, all scripts and detailed description is provided in folder `data_acquisition/dummy_statements`.
 
-**Art** and **Random** datasets have been collected via [Wikidata API](https://www.wikidata.org/wiki/Wikidata:REST_API) in JSON format. Entities have been selected from Wikidata SPARQL endpoint with the following queries:
-
 Each statement has been added into a json file which has the same structure as the wikidata json which can be retreived from the Wikidata API. (by the script randomic_statements.py). Each statement ranking corresponds to "Deprecated". Each statement has also a star time date and a end time date to qualify the period when the artwork has been located in the location expressed by the statement (e.g. Mona Lisa location was "Museo della Storia di Bologna" (```wd:Q55107400```) from 10 april 1903 to 13 may 1904).
 DISCLAIMER: Dates are complitely random, this means that the artwork's inception can be postumous confronting the start date of its location.
 
-The json has been converted in RDF thanks to https://www.fabiovitali.it/wikidataconverter/
-With this templating a provenance triple has been added to each statement to qualify its fakeness (statement prov:wasDerivedFrom "fake news")
+An excellent way to evaluate an algorithm’s performance is to observe how it responds to variations in input size. We started by downloading the whole subset of artwork entities, related individuals (basically, attributed authors), and locations. This dataset, called D4, is composed of about 3,5 million artwork entities and 188 thousand related entities (humans and locations). We have not used this dataset for our comparison due to the excessive number of timeouts in many of the queries and methods we used. Thus we scaled the dataset logarithmically in three further sizes:
 
-DATASET C NOW CONTAINS:
-- 203236 artworks
-- 812039 (fake) location statements
-- avg. 4 statements added to each artwork
-- 2,35 GB size of all the json files created with ```randomic_statements.py```
-
-Note: these counts has been made trough the ```counter.py``` script, available in this folder.
-
-An excellent way to evaluate an algorithm’s performance is to observe how it responds to variations in input size [@Orlandi2021BenchmarkingRM]. We started by downloading the whole subset of artwork entities, related individuals (basically, attributed authors), and locations. This dataset, called D4, is composed of about 3,5 million artwork entities and 188 thousand related entities (humans and locations). We have not used this dataset for our comparison due to the excessive number of timeouts in many of the queries and methods we used. Thus we scaled the dataset logarithmically in three further sizes:
-
-- Dataset D3: D3 is obtained by extracting one-tenth of the data in D4 (D3 = D4/10).
-- Dataset D2: D2 is obtained by extracting one-tenth of the data in D3 (D2 = D3/10).
-- Dataset D1: D1 is obtained by extracting one-tenth of the data in D2 (D1 = D2/10).
+- **Dataset D3**: D3 is obtained by extracting one-tenth of the data in D4 (D3 = D4/10).
+- **Dataset D2**: D2 is obtained by extracting one-tenth of the data in D3 (D2 = D3/10).
+- **Dataset D1**: D1 is obtained by extracting one-tenth of the data in D2 (D1 = D2/10).
 
 We then surveyed the state of the art regarding reification methods to express without asserting and selected a set of methods for our analysis: Singleton properties [@nguyen2014reification], Named graphs[@carroll2005named] (using Wikidata rankings to decide whether a triple is asserted or not), Wikidata[@erxleben_introducing_2014], and the recent RDF-star[@hartig2017foundations] approach. We converted Wikidata JSON files into the six selected reification methods through automatic scripts. In table \ref{tab:datasets} we provide some data about our datasets. At the end of this process, we obtained 18 new method-specific datasets. In other words, for each dataset $Dn, \; n \in [1, 3]$, we constructed the following datasets:
 
