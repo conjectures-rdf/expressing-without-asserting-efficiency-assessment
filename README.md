@@ -84,9 +84,9 @@ In the case of Conjectures (both strong and weak form) this logic is slightly di
 - If both triples (1 and 2) are ranked as Normal, they are two Named Graphs (both asserted ).
 - If both triples (1 and 2) are ranked as Preferred, they are two Collapsed Conjectures (both asserted).
 - If both triples (1 and 2) are ranked as Deprecated, they are two Conjectures (both non-asserted).
-- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is Collapsed Conjecture (asserted) and the second (2) is a Conjecture (non-asserted).
-- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) is a Conjecture (non-asserted) and the second (2) is a Named Graph (asserted).
-- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (asserted).
+- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is Collapsed Conjecture (both asserted and non-asserted) and the second (2) is a Conjecture (non-asserted).
+- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (both asserted and non-asserted).
+- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (both asserted and non-asserted).
 
 In the table below we provide some data about our datasets. At the end of this process, we obtained 18 new method-specific datasets. In other words, for each dataset $Dn, \; n \in [1, 3]$, we constructed the following datasets:
 
