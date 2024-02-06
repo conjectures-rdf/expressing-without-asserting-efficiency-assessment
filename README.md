@@ -51,7 +51,7 @@ We then surveyed the state of the art regarding reification methods to express w
 
 
 <!-- TOC --><a name="conversion-rationale"></a>
-### Conversion rationale
+### Assertion vs. Non-Assertion Logic
 In Wikidata, assertion or non assertion of claims is strictly dependent from their rankings. 
 
 For example, the triples (1)```wd:Q10743 wdt:P214 "249422654"``` and (2)```wd:Q10743 wdt:P214 "315523483"``` share the same subject-predicate values, but differ wrt their objects. 
