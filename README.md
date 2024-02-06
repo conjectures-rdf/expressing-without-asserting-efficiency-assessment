@@ -1,3 +1,7 @@
+# EWA-efficiency
+
+This repository contains all files to evaluate Expressing Without Asserting (EWA) approaches in RDF. 
+
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
 - [EWA-efficiency](#ewa-efficiency)
@@ -16,9 +20,6 @@
 <!-- TOC end -->
 
 <!-- TOC --><a name="ewa-efficiency"></a>
-# EWA-efficiency
-
-This repository contains all files to evaluate Expressing Without Asserting (EWA) approaches in RDF. 
 
 <!-- TOC --><a name="data-acquisition-scaling-and-conversion"></a>
 ## Data Acquisition, scaling and conversion
