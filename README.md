@@ -30,8 +30,21 @@ The dataset on which these experiments have been run is composed as follows and 
 - **Random**: after considerable deliberation, we concluded that adding some kind of entropy to the dataset would make it more representative. This dataset contains the claims of 300k Wikidata random entities.
 - **Dummy**: a selection of dummy statements regarding the artwork attributions (represented by the property `wdt:P50` and `wdt:P170` and including from 1 to 4 authors in each claim and the source of the claim) and artworks locations (represented by the property `wdt:P276`, including 1 possible location, time constraints and source) has been created. Those new statements contain dummy arbitrary information ranked as deprecated and therefore non-asserted to represent alternative or historical claims to those contained in Art dataset. This design choice was made to increase the number of conjectural statements in the final dataset.
 
-Such datasets have been collected via (Wikidata API)[https://www.wikidata.org/wiki/Wikidata:REST_API] in JSON format. 
+**Art** and **Random** datasets have been collected via [Wikidata API](https://www.wikidata.org/wiki/Wikidata:REST_API) in JSON format. Entities have been selected from Wikidata SPARQL endpoint with the following queries:
 
+```  
+SELECT DISTINCT ?artwork ?type WHERE {
+    ?artwork wdt:P31 ?type.
+    ?type (wdt:P279*) wd:Q838948. hint:Prior hint:rangeSafe true
+}
+```
+```  
+SELECT DISTINCT * WHERE {
+    ?entity wdt:P31 ?type. hint:Prior hint:rangeSafe true
+    MINUS { ?type (wdt:P279*) wd:Q838948. }
+}
+LIMIT 3000000
+```  
 An excellent way to evaluate an algorithm’s performance is to observe how it responds to variations in input size [@Orlandi2021BenchmarkingRM]. We started by downloading the whole subset of artwork entities, related individuals (basically, attributed authors), and locations. This dataset, called D4, is composed of about 3,5 million artwork entities and 188 thousand related entities (humans and locations). We have not used this dataset for our comparison due to the excessive number of timeouts in many of the queries and methods we used. Thus we scaled the dataset logarithmically in three further sizes:
 
 - Dataset D3: D3 is obtained by extracting one-tenth of the data in D4 (D3 = D4/10).
