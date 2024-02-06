@@ -32,19 +32,38 @@ The dataset on which these experiments have been run is composed as follows and 
 
 **Art** and **Random** datasets have been collected via [Wikidata API](https://www.wikidata.org/wiki/Wikidata:REST_API) in JSON format. Entities have been selected from Wikidata SPARQL endpoint with the following queries:
 
-```  
+```
+# Artworks  
 SELECT DISTINCT ?artwork ?type WHERE {
     ?artwork wdt:P31 ?type.
     ?type (wdt:P279*) wd:Q838948. hint:Prior hint:rangeSafe true
 }
 ```
-```  
+```
+# Random
 SELECT DISTINCT * WHERE {
     ?entity wdt:P31 ?type. hint:Prior hint:rangeSafe true
     MINUS { ?type (wdt:P279*) wd:Q838948. }
 }
 LIMIT 3000000
-```  
+```
+
+**Dummy statements** have been programmatically produced via Python scripts, all scripts and detailed description is provided in folder `data_acquisition/dummy_statements`
+
+Each statement has been added into a json file which has the same structure as the wikidata json which can be retreived from the Wikidata API. (by the script randomic_statements.py). Each statement ranking corresponds to "Deprecated". Each statement has also a star time date and a end time date to qualify the period when the artwork has been located in the location expressed by the statement (e.g. Mona Lisa location was "Museo della Storia di Bologna" (```wd:Q55107400```) from 10 april 1903 to 13 may 1904).
+DISCLAIMER: Dates are complitely random, this means that the artwork's inception can be postumous confronting the start date of its location.
+
+The json has been converted in RDF thanks to https://www.fabiovitali.it/wikidataconverter/
+With this templating a provenance triple has been added to each statement to qualify its fakeness (statement prov:wasDerivedFrom "fake news")
+
+DATASET C NOW CONTAINS:
+- 203236 artworks
+- 812039 (fake) location statements
+- avg. 4 statements added to each artwork
+- 2,35 GB size of all the json files created with ```randomic_statements.py```
+
+Note: these counts has been made trough the ```counter.py``` script, available in this folder
+
 An excellent way to evaluate an algorithm’s performance is to observe how it responds to variations in input size [@Orlandi2021BenchmarkingRM]. We started by downloading the whole subset of artwork entities, related individuals (basically, attributed authors), and locations. This dataset, called D4, is composed of about 3,5 million artwork entities and 188 thousand related entities (humans and locations). We have not used this dataset for our comparison due to the excessive number of timeouts in many of the queries and methods we used. Thus we scaled the dataset logarithmically in three further sizes:
 
 - Dataset D3: D3 is obtained by extracting one-tenth of the data in D4 (D3 = D4/10).
