@@ -1,7 +1,26 @@
+<!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
+
+- [EWA-efficiency](#ewa-efficiency)
+   * [Data Acquisition, scaling and conversion](#data-acquisition-scaling-and-conversion)
+      + [Conversion rationale](#conversion-rationale)
+      + [Additional materials](#additional-materials)
+      + [Converting JSON files via Wikidata Converter App](#converting-json-files-via-wikidata-converter-app)
+      + [Example output RDF files out of handlebars templates](#example-output-rdf-files-out-of-handlebars-templates)
+         - [Wikidata ](#wikidata)
+         - [Named Graphs](#named-graphs)
+         - [Singleton Properties](#singleton-properties)
+         - [RDF-star (RDF 1.1 syntax extension)](#rdf-star-rdf-11-syntax-extension)
+         - [Conjectures (weak form)](#conjectures-weak-form)
+   * [GraphDB costumisation and setup](#graphdb-costumisation-and-setup)
+
+<!-- TOC end -->
+
+<!-- TOC --><a name="ewa-efficiency"></a>
 # EWA-efficiency
 
 This repository contains all files to evaluate Expressing Without Asserting (EWA) approaches in RDF. 
 
+<!-- TOC --><a name="data-acquisition-scaling-and-conversion"></a>
 ## Data Acquisition, scaling and conversion
 
 The dataset on which these experiments have been run is composed as follows and has been named D3:
@@ -28,6 +47,7 @@ We then surveyed the state of the art regarding reification methods to express w
 | Dn-Singleton      | Turtle            | Singleton properties        | yes             | 55,325,270           |
 
 
+<!-- TOC --><a name="conversion-rationale"></a>
 ### Conversion rationale
 In Wikidata, assertion or non assertion of claims is strictly dependent from their rankings. 
 
@@ -40,11 +60,13 @@ For example, the triples (1)```wd:Q10743 wdt:P214 "249422654"``` and (2)```wd:Q1
 - If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) in non-asserted and the second (2) is asserted. 
 - If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is non-asserted and the second (2) is asserted. 
 
+<!-- TOC --><a name="additional-materials"></a>
 ### Additional materials
 - In folder ```handlebars_templates``` has been saved all templates to convert jsons into RDF with https://www.fabiovitali.it/wikidataconverter/
 - In folder ```handlebars_templates_fake``` has been saved all templates to convert fake jsons (Dataset C) into RDF https://www.fabiovitali.it/wikidataconverter/
 - In folder ```handlebars_templates``` you can find an additional set of helpers called ```helper.js```, this is meant to be use in data conversions since it reproduces the assertion - non assertion of the statements in the json files (a more in the depth explanation of the topic is in the section above).
 
+<!-- TOC --><a name="converting-json-files-via-wikidata-converter-app"></a>
 ### Converting JSON files via Wikidata Converter App
 The downloaded json files from Wikidata can be trasformed into RDF format with the online converter 
 - Download the application from  [LINK AL COVERTER AGGIORNATO].
@@ -55,6 +77,7 @@ The downloaded json files from Wikidata can be trasformed into RDF format with t
     - Note 2. If the process stops, allocate more RAM space in the cmd with the command ```node --max-old-space-size=12288 app.js``` to run again the application. 
 - A .zip folder will be automatically downloaded. This archive contains all RDF files converted against your chosen templates. 
 
+<!-- TOC --><a name="example-output-rdf-files-out-of-handlebars-templates"></a>
 ### Example output RDF files out of handlebars templates
 A conversion test has been run agaist the templates. In the folder ```conversion_test``` can be found input and output data. Each output RDF dataset has been validated with Apache Jena Fuseki. Below a summary for each dataset applied against each model:
 
@@ -81,6 +104,7 @@ Each converted dataset is exemplified below with two different examples:
 1) The first represents two statements (_Germany native label is Bundesrepublik Deutschland_ and _Germany native label is Deutschland_) both ranked as normal, and then equally asserted.
 2) The second represents three statements (_Germany has diplomatic relation with Taiwan_, _Germany has diplomatic relation with Bhutan_ (unconfirmed statement), _Germany has diplomatic relation with Cape Verde_) respectively rankes as normal (non asserted), deprecated (non asserted), preferred (asserted)
 
+<!-- TOC --><a name="wikidata"></a>
 #### Wikidata 
 
 ```
@@ -121,6 +145,7 @@ s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 a wikibase:Statement;
     wikibase:rank wikibase:PreferredRank.
 ```
 
+<!-- TOC --><a name="named-graphs"></a>
 #### Named Graphs
 Note: With named graphs all statements are asserted.  
 Note2: Since Named Graphs allows for statements groupings, when all statements are ranked as Normal (or all has the same qualifiers) as the case below, they can be grouped in the same graph without changing any statement meaning.
@@ -157,6 +182,7 @@ s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 wikibase:rank wikibase:PreferredRank
 
 ```
 
+<!-- TOC --><a name="singleton-properties"></a>
 #### Singleton Properties
 ```
 wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
@@ -191,6 +217,7 @@ sng:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 sng:singletonPropertyOf wdt:P530 .
     wikibase:rank wikibase:PreferredRank.
 ```
 
+<!-- TOC --><a name="rdf-star-rdf-11-syntax-extension"></a>
 #### RDF-star (RDF 1.1 syntax extension)
 ```
 wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
@@ -220,6 +247,7 @@ wd:Q183 wdt:P530 wd:Q1011.
     wikibase:rank wikibase:PreferredRank.
 ```
 
+<!-- TOC --><a name="conjectures-weak-form"></a>
 #### Conjectures (weak form)
 Note: Since conjectures allows for statements groupings (inheriting it from Named Graphs), when all statements are ranked as Normal (or all has the same qualifiers) as the case below, they can be grouped in the same graph without changing any statement meaning. 
 ```
@@ -264,6 +292,7 @@ s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 pq:P805 wd:Q28498636.
 s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 pq:P531 wd:Q58003162.
 s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 wikibase:rank wikibase:PreferredRank.   
 ```
+<!-- TOC --><a name="graphdb-costumisation-and-setup"></a>
 ## GraphDB costumisation and setup
 
 To run the experiments take the following steps:
@@ -275,3 +304,4 @@ To run the experiments take the following steps:
 - Run locally the code provided in ```XXX``` and locate the ```queries``` in the same folder.
   - ```queries``` contains the set of queries designed for this experiment and the code to run them 
   - ```query_exectution_response``` contains partial and final results of query runs which come from this test attempt. 
+
