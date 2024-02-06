@@ -22,6 +22,11 @@ This repository contains all files to evaluate Expressing Without Asserting (EWA
 <!-- TOC --><a name="ewa-efficiency"></a>
 
 <!-- TOC --><a name="data-acquisition-scaling-and-conversion"></a>
+
+This project can be summarised as follows and it is explained in this README.md file.
+
+![EWA efficiency tests workflow](documentation/ewa_efficiency_workflow.png)
+
 ## Data Acquisition, scaling and conversion
 
 The dataset on which these experiments have been run is composed as follows and has been named D3:
