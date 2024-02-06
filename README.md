@@ -56,7 +56,7 @@ LIMIT 3000000
 
 ## Data scaling 
 
-An excellent way to evaluate an algorithm’s performance is to observe how it responds to variations in input size. We started by downloading the whole subset of artwork entities, related individuals (basically, attributed authors), and locations. This dataset, called D4, is composed of about 3,5 million artwork entities and 188 thousand related entities (humans and locations). We have not used this dataset for our comparison due to the excessive number of timeouts in many of the queries and methods we used. Thus we scaled the dataset logarithmically in three further sizes:
+An excellent way to evaluate an algorithm’s performance is to observe how it responds to variations in input size. We started by downloading the whole subset of artwork entities, related individuals (basically, attributed authors), and locations. This dataset, called D4, is composed of about 3,5 million artwork entities and 188 thousand related entities (humans and locations). We have not used this dataset for our comparison due to the excessive number of timeouts in many of the queries and methods we used. Thus we scaled the dataset logarithmically in three further sizes ($Dn, \; n \in [1, 3]$):
 
 - **Dataset D3**: D3 is obtained by extracting one-tenth of the data in D4 (D3 = D4/10).
 - **Dataset D2**: D2 is obtained by extracting one-tenth of the data in D3 (D2 = D3/10).
@@ -66,7 +66,7 @@ An excellent way to evaluate an algorithm’s performance is to observe how it r
 We then surveyed the state of the art regarding reification methods to express without asserting and selected a set of methods for our analysis: **Singleton properties**, **Named graphs** (using Wikidata rankings to decide whether a triple is asserted or not), **Wikidata**, and the recent **RDF-star** approach. 
 
 ## Data conversion
-We converted Wikidata JSON files into the six selected reification methods through automatic scripts using an on-purpose Node.js application using Handlebars for conversion. 
+We converted Wikidata JSON files into the six selected reification methods in order to have for each dataset a set of asserted and non-asserted claims. 
 
 <!-- TOC --><a name="conversion-rationale"></a>
 ### Assertion vs Non-Assertion Logic
@@ -88,6 +88,19 @@ In the case of Conjectures (both strong and weak form) this logic is slightly di
 - If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (both asserted and non-asserted).
 - If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (both asserted and non-asserted).
 
+## Conversion approach
+- The assertion vs non-assertion logic has been translated into a set of templates each of which has been customised to convert the JSON files in $Dn, \; n \in [1, 3]$ in one of the selected EWA approaches. Such templates are written in [Handelbars syntax](https://handlebarsjs.com/). All templates are available in ```data_conversion/handlebars_templates```. This set of templates has been used to convert **Art** and **Random** claims.
+- Similarly, another set of templates which are available at ```data_conversion/handlebars_templates_dummy``` has been designed to convert JSON files in $Dn, \; n \in [1, 3]$ storing the **Dummy** claims. 
+- Such Handlebar templates can be uploaded via an interface in a Node.js application designed for the purpose. An online version of the web app can be found at [https://www.fabiovitali.it/wikidataconverter/](https://www.fabiovitali.it/wikidataconverter/). In particular, the web app receives a JSON datasets and the handlebars templates and produces a RDF dataset with the data provided in the JSON dataset following the rules expressed in the handlebar templates.
+- Due to the large size of JSON datasets, this web app can be run locally to make some bulk conversions. The application is stored in the folder XXX.
+	- Start the application by simply starting node with the command ```node app.js```, the interface will be available in your browser at port ```3000```.
+	- In the interface, upload the templates (available in folder ```data_conversion/handlebars_templates``` and ```data_conversion/handlebars_templates_fake```) or fill the dedicated forms.
+	- Use "Bulk convert" function to upload a .zip archive containing all JSONS files.
+    	- Note. Do not upload a .zip file grater than 2GB.
+    	- Note 2. If the process stops, allocate more RAM space in the cmd with the command ```node --max-old-space-size=12288 app.js``` to run again the application.
+	- A .zip folder will be automatically downloaded. This archive contains all RDF files converted against your chosen templates.  
+	- Disclaimer: In folder ```data_conversion/handlebars_templates``` you can find an additional set of helpers called ```helper.js```, this is meant to be use in data conversions since it reproduces the assertion - non assertion of the statements in the json files.
+   
 In the table below we provide some data about our datasets. At the end of this process, we obtained 18 new method-specific datasets. In other words, for each dataset $Dn, \; n \in [1, 3]$, we constructed the following datasets:
 
 | **name**           | **Serialization** | **Reification**             | **EWA**         | **# RDF stmts in D3** |
@@ -99,22 +112,11 @@ In the table below we provide some data about our datasets. At the end of this p
 | Dn-conjWeak       | TriG              | Conjectures - weak form     | yes             | 29,199,650           |
 | Dn-Singleton      | Turtle            | Singleton properties        | yes             | 55,325,270           |
 
-<!-- TOC --><a name="additional-materials"></a>
-### Additional materials
-- In folder ```handlebars_templates``` has been saved all templates to convert jsons into RDF with https://www.fabiovitali.it/wikidataconverter/
-- In folder ```handlebars_templates_fake``` has been saved all templates to convert fake jsons (Dataset C) into RDF https://www.fabiovitali.it/wikidataconverter/
-- In folder ```handlebars_templates``` you can find an additional set of helpers called ```helper.js```, this is meant to be use in data conversions since it reproduces the assertion - non assertion of the statements in the json files (a more in the depth explanation of the topic is in the section above).
-
 <!-- TOC --><a name="converting-json-files-via-wikidata-converter-app"></a>
 ### Converting JSON files via Wikidata Converter App
 The downloaded json files from Wikidata can be trasformed into RDF format with the online converter
 - Download the application from  [LINK AL COVERTER AGGIORNATO].
-- Start the application by simply starting node with the command ```node app.js```, the interface will be available in your browser at port ```3000```.
-- In the interface, upload the templates (available in folder ```handlebars_templates``` and ```handlebars_templates_fake```) or fill the dedicated forms.
-- Use "Bulk convert" function to upload a .zip archive containing all jsons.
-    - Note. Do not upload a .zip file grater than 2GB.
-    - Note 2. If the process stops, allocate more RAM space in the cmd with the command ```node --max-old-space-size=12288 app.js``` to run again the application.
-- A .zip folder will be automatically downloaded. This archive contains all RDF files converted against your chosen templates.
+
 
 <!-- TOC --><a name="example-output-rdf-files-out-of-handlebars-templates"></a>
 ### Example output RDF files out of handlebars templates
