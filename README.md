@@ -18,18 +18,6 @@ An excellent way to evaluate an algorithm’s performance is to observe how it r
 
 We then surveyed the state of the art regarding reification methods to express without asserting and selected a set of methods for our analysis: Singleton properties [@nguyen2014reification], Named graphs[@carroll2005named] (using Wikidata rankings to decide whether a triple is asserted or not), Wikidata[@erxleben_introducing_2014], and the recent RDF-star[@hartig2017foundations] approach. We converted Wikidata JSON files into the six selected reification methods through automatic scripts. In table \ref{tab:datasets} we provide some data about our datasets. At the end of this process, we obtained 18 new method-specific datasets. In other words, for each dataset $Dn, \; n \in [1, 3]$, we constructed the following datasets:
 
-\begin{comment}
-    
-\begin{itemize}
-    \item \textbf{Dn-Wikidata}: serialization: Turtle, reification: Wikidata, EWA: yes.
-    \item \textbf{Dn-rdfStar}: serialisation: Turtle, reification: RDF-star, EWA: yes.
-    \item \textbf{Dn-conjStrong}: serialization: TriG, reification: Conjectures strong form, EWA: yes.
-    \item \textbf{Dn-nGraphs}: serialization: TriG, reification: Named graphs, EWA: no, but can be achieved via rankings.
-    \item \textbf{Dn-conjWeak}: serialization: TriG, reification: Conjectures weak form, EWA: yes.
-    \item \textbf{Dn-Singleton}: serialization: Turtle, reification: Singleton Property, EWA: yes.
-\end{itemize}
-\end{comment}
-
 | **name**           | **Serialization** | **Reification**             | **EWA**         | **# RDF stmts in D3** |
 |-------------------|-------------------|-----------------------------|-----------------|-----------------------|
 | Dn-Wikidata       | Turtle            | Wikidata                    | yes             | 66,768,937           |
