@@ -2,7 +2,7 @@
 
 This repository contains all files to evaluate Expressing Without Asserting (EWA) approaches in RDF. 
 
-# Data Acquisition and Conversion
+## Data Acquisition and Conversion
 The final dataset is composed of the union of three main sub-datasets:
 - Dataset A: Composed by ca. 3 million Wikidata artworks (along with, when possible, their creator and location) and their relative statements.
 - Dataset B: Composed by ca. 3 million Wikidata random entities (except for artworks) and their relative statements. 
@@ -16,7 +16,7 @@ The final dataset will be modelled with five different RDF models:
 - Conjectures (weak form)
 - Conjectures (strong form)
 
-## Conversion rationale
+### Conversion rationale
 In Wikidata, assertion or non assertion of claims is strictly dependent from their rankings. 
 
 For example, the triples (1)```wd:Q10743 wdt:P214 "249422654"``` and (2)```wd:Q10743 wdt:P214 "315523483"``` share the same subject-predicate values, but differ wrt their objects. 
@@ -28,12 +28,12 @@ For example, the triples (1)```wd:Q10743 wdt:P214 "249422654"``` and (2)```wd:Q1
 - If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) in non-asserted and the second (2) is asserted. 
 - If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is non-asserted and the second (2) is asserted. 
 
-# Additional materials
+### Additional materials
 - In folder ```handlebars_templates``` has been saved all templates to convert jsons into RDF with https://www.fabiovitali.it/wikidataconverter/
 - In folder ```handlebars_templates_fake``` has been saved all templates to convert fake jsons (Dataset C) into RDF https://www.fabiovitali.it/wikidataconverter/
 - In folder ```handlebars_templates``` you can find an additional set of helpers called ```helper.js```, this is meant to be use in data conversions since it reproduces the assertion - non assertion of the statements in the json files (a more in the depth explanation of the topic is in the section above).
 
-# Converting files via Wikidata Converter App
+### Converting JSON files via Wikidata Converter App
 The downloaded json files from Wikidata can be trasformed into RDF format with the online converter 
 - Download the application from  [LINK AL COVERTER AGGIORNATO].
 - Start the application by simply starting node with the command ```node app.js```, the interface will be available in your browser at port ```3000```.
