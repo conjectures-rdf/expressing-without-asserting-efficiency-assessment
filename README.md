@@ -2,19 +2,43 @@
 
 This repository contains all files to evaluate Expressing Without Asserting (EWA) approaches in RDF. 
 
-## Data Acquisition and Conversion
-The final dataset is composed of the union of three main sub-datasets:
-- Dataset A: Composed by ca. 3 million Wikidata artworks (along with, when possible, their creator and location) and their relative statements.
-- Dataset B: Composed by ca. 3 million Wikidata random entities (except for artworks) and their relative statements. 
-- Dataset C: Composed by ca. XXX million entities and their relative statements whose ranking has been randomised (especially with ```wikibase:PreferredRank``` and ```wikibase:DeprecatedRank```).
+## Data Acquisition, scaling and conversion
 
-The final dataset will be modelled with five different RDF models:
-- Wikidata statements
-- Named Graphs
-- Singleton properties
-- RDF-star
-- Conjectures (weak form)
-- Conjectures (strong form)
+The dataset on which these experiments have been run is composed as follows and has been named D3:
+
+- **Art**: A thematic set of claims about 300k artwork entities in Wikidata (i.e., painting, manuscripts, books). This corresponds to about 10% of all artwork entities currently present inside Wikidata.
+- **Random**: after considerable deliberation, we concluded that adding some kind of entropy to the dataset would make it more representative. This dataset contains the claims of 300k Wikidata random entities.
+- **Dummy**: a selection of dummy statements regarding the artwork attributions (represented by the property `wdt:P50` and `wdt:P170` and including from 1 to 4 authors in each claim and the source of the claim) and artworks locations (represented by the property `wdt:P276`, including 1 possible location, time constraints and source) has been created. Those new statements contain dummy arbitrary information ranked as deprecated and therefore non-asserted to represent alternative or historical claims to those contained in Art dataset. This design choice was made to increase the number of conjectural statements in the final dataset.
+
+An excellent way to evaluate an algorithm’s performance is to observe how it responds to variations in input size [@Orlandi2021BenchmarkingRM]. We started by downloading the whole subset of artwork entities, related individuals (basically, attributed authors), and locations. This dataset, called D4, is composed of about 3,5 million artwork entities and 188 thousand related entities (humans and locations). We have not used this dataset for our comparison due to the excessive number of timeouts in many of the queries and methods we used. Thus we scaled the dataset logarithmically in three further sizes:
+
+- Dataset D3: D3 is obtained by extracting one-tenth of the data in D4 (D3 = D4/10).
+- Dataset D2: D2 is obtained by extracting one-tenth of the data in D3 (D2 = D3/10).
+- Dataset D1: D1 is obtained by extracting one-tenth of the data in D2 (D1 = D2/10).
+
+We then surveyed the state of the art regarding reification methods to express without asserting and selected a set of methods for our analysis: Singleton properties [@nguyen2014reification], Named graphs[@carroll2005named] (using Wikidata rankings to decide whether a triple is asserted or not), Wikidata[@erxleben_introducing_2014], and the recent RDF-star[@hartig2017foundations] approach. We converted Wikidata JSON files into the six selected reification methods through automatic scripts. In table \ref{tab:datasets} we provide some data about our datasets. At the end of this process, we obtained 18 new method-specific datasets. In other words, for each dataset $Dn, \; n \in [1, 3]$, we constructed the following datasets:
+
+\begin{comment}
+    
+\begin{itemize}
+    \item \textbf{Dn-Wikidata}: serialization: Turtle, reification: Wikidata, EWA: yes.
+    \item \textbf{Dn-rdfStar}: serialisation: Turtle, reification: RDF-star, EWA: yes.
+    \item \textbf{Dn-conjStrong}: serialization: TriG, reification: Conjectures strong form, EWA: yes.
+    \item \textbf{Dn-nGraphs}: serialization: TriG, reification: Named graphs, EWA: no, but can be achieved via rankings.
+    \item \textbf{Dn-conjWeak}: serialization: TriG, reification: Conjectures weak form, EWA: yes.
+    \item \textbf{Dn-Singleton}: serialization: Turtle, reification: Singleton Property, EWA: yes.
+\end{itemize}
+\end{comment}
+
+| **name**           | **Serialization** | **Reification**             | **EWA**         | **# RDF stmts in D3** |
+|-------------------|-------------------|-----------------------------|-----------------|-----------------------|
+| Dn-Wikidata       | Turtle            | Wikidata                    | yes             | 66,768,937           |
+| Dn-rdfStar        | Turtle            | RDF-star                    | yes             | 29,779,850           |
+| Dn-conjStrong     | TriG              | Conjectures - strong form   | yes             | 29,058,944           |
+| Dn-nGraphs        | TriG              | Named graphs                | via ranking     | 28,896,268           |
+| Dn-conjWeak       | TriG              | Conjectures - weak form     | yes             | 29,199,650           |
+| Dn-Singleton      | Turtle            | Singleton properties        | yes             | 55,325,270           |
+
 
 ### Conversion rationale
 In Wikidata, assertion or non assertion of claims is strictly dependent from their rankings. 
