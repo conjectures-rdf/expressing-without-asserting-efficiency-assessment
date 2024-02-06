@@ -99,7 +99,7 @@ In the case of Conjectures (both strong and weak form) this logic is slightly di
     	- Note. Do not upload a .zip file grater than 2GB.
     	- Note 2. If the process stops, allocate more RAM space in the cmd with the command ```node --max-old-space-size=12288 app.js``` to run again the application.
 	- A .zip folder will be automatically downloaded. This archive contains all RDF files converted against your chosen templates.  
-	- Disclaimer: In folder ```data_conversion/handlebars_templates``` you can find an additional set of helpers called ```helper.js```, this is meant to be use in data conversions since it reproduces the assertion - non assertion of the statements in the json files.
+	- Disclaimer: In folder ```data_conversion``` you can find an additional set of helpers called ```helper.js```, this is meant to be use in data conversions since it reproduces the assertion - non assertion of the statements in the json files.
    
 In the table below we provide some data about our datasets. At the end of this process, we obtained 18 new method-specific datasets. In other words, for each dataset $Dn, \; n \in [1, 3]$, we constructed the following datasets:
 
