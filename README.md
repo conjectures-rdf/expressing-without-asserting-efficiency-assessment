@@ -55,7 +55,7 @@ The downloaded json files from Wikidata can be trasformed into RDF format with t
     - Note 2. If the process stops, allocate more RAM space in the cmd with the command ```node --max-old-space-size=12288 app.js``` to run again the application. 
 - A .zip folder will be automatically downloaded. This archive contains all RDF files converted against your chosen templates. 
 
-# Example output RDF files out of handlebars templates
+### Example output RDF files out of handlebars templates
 A conversion test has been run agaist the templates. In the folder ```conversion_test``` can be found input and output data. Each output RDF dataset has been validated with Apache Jena Fuseki. Below a summary for each dataset applied against each model:
 
 | ** D1 **             | Upload time (ms) | Total Triples |  Query Time (ms) |  Query                                       | Queried Triples  |
@@ -81,7 +81,7 @@ Each converted dataset is exemplified below with two different examples:
 1) The first represents two statements (_Germany native label is Bundesrepublik Deutschland_ and _Germany native label is Deutschland_) both ranked as normal, and then equally asserted.
 2) The second represents three statements (_Germany has diplomatic relation with Taiwan_, _Germany has diplomatic relation with Bhutan_ (unconfirmed statement), _Germany has diplomatic relation with Cape Verde_) respectively rankes as normal (non asserted), deprecated (non asserted), preferred (asserted)
 
-### Wikidata 
+#### Wikidata 
 
 ```
 wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
@@ -121,7 +121,7 @@ s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 a wikibase:Statement;
     wikibase:rank wikibase:PreferredRank.
 ```
 
-### Named Graphs
+#### Named Graphs
 Note: With named graphs all statements are asserted.  
 Note2: Since Named Graphs allows for statements groupings, when all statements are ranked as Normal (or all has the same qualifiers) as the case below, they can be grouped in the same graph without changing any statement meaning.
 
@@ -157,7 +157,7 @@ s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 wikibase:rank wikibase:PreferredRank
 
 ```
 
-### Singleton Properties
+#### Singleton Properties
 ```
 wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
 sng:P417-0 sng:singletonPropertyOf wdt:P417  ;
@@ -191,7 +191,7 @@ sng:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 sng:singletonPropertyOf wdt:P530 .
     wikibase:rank wikibase:PreferredRank.
 ```
 
-### RDF-star (RDF 1.1 syntax extension)
+#### RDF-star (RDF 1.1 syntax extension)
 ```
 wd:Q183 wdt:P1705 "Bundesrepublik Deutschland"@de.
 <<wd:Q183 wdt:P1705 "Bundesrepublik Deutschland">>
@@ -220,7 +220,7 @@ wd:Q183 wdt:P530 wd:Q1011.
     wikibase:rank wikibase:PreferredRank.
 ```
 
-### Conjectures (weak form)
+#### Conjectures (weak form)
 Note: Since conjectures allows for statements groupings (inheriting it from Named Graphs), when all statements are ranked as Normal (or all has the same qualifiers) as the case below, they can be grouped in the same graph without changing any statement meaning. 
 ```
 GRAPH s:Q183-d657d418-4a25-98d6-5180-a3659a11fbcd  {
@@ -264,7 +264,7 @@ s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 pq:P805 wd:Q28498636.
 s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 pq:P531 wd:Q58003162.
 s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 wikibase:rank wikibase:PreferredRank.   
 ```
-
+## GraphDB costumisation and setup
 
 To run the experiments take the following steps:
 - Run locally one of the two available dockers:
