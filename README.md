@@ -113,8 +113,8 @@ In the table below we provide some data about our datasets. At the end of this p
 | Dn-Singleton      | Turtle            | Singleton properties        | yes             | 55,325,270           |
 
 <!-- TOC --><a name="example-output-rdf-files-out-of-handlebars-templates"></a>
-### Example output RDF files out of handlebars templates
-A conversion test has been run agaist the templates. In the folder ```conversion_test``` can be found input and output data. Each output RDF dataset has been validated with Apache Jena Fuseki. Below a summary for each dataset applied against each model:
+### Dataset Validation
+RDF datasets have been validated by uploading them in Triplestore. Below a summary for each dataset applied against each model in Jena Fuseki:
 
 | ** D1 **             | Upload time (ms) | Total Triples |  Query Time (ms) |  Query                                       | Queried Triples  |
 |----------------------|------------------|---------------|------------------|----------------------------------------------|------------------|
