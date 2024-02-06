@@ -66,7 +66,29 @@ An excellent way to evaluate an algorithm’s performance is to observe how it r
 We then surveyed the state of the art regarding reification methods to express without asserting and selected a set of methods for our analysis: **Singleton properties**, **Named graphs** (using Wikidata rankings to decide whether a triple is asserted or not), **Wikidata**, and the recent **RDF-star** approach. 
 
 ## Data conversion
-We converted Wikidata JSON files into the six selected reification methods through automatic scripts using an on-purpose Node.js application using Handlebars for conversion. In the table below we provide some data about our datasets. At the end of this process, we obtained 18 new method-specific datasets. In other words, for each dataset $Dn, \; n \in [1, 3]$, we constructed the following datasets:
+We converted Wikidata JSON files into the six selected reification methods through automatic scripts using an on-purpose Node.js application using Handlebars for conversion. 
+
+<!-- TOC --><a name="conversion-rationale"></a>
+### Assertion vs Non-Assertion Logic
+In Wikidata, assertion or non-assertion of claims is strictly dependent on their rankings. Ranking information is present in the JSON files, so we established a logic to reconstruct the assertion/non assertion logic to mimic Wikidata RDF statements.
+
+For example, the triples (1) ```wd:Q10743 wdt:P214 "249422654"``` and (2) ```wd:Q10743 wdt:P214 "315523483"``` share the same subject-predicate values, but differ wrt their objects.
+- If both triples (1 and 2) are ranked as Normal, they are both asserted.
+- If both triples (1 and 2) are ranked as Preferred, they are both asserted.
+- If both triples (1 and 2) are ranked as Deprecated, they are both non-asserted.
+- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is asserted and the second (2) is non-asserted.
+- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) in non-asserted and the second (2) is asserted.
+- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is non-asserted and the second (2) is asserted.
+
+In the case of Conjectures (both strong and weak form) this logic is slightly different due to a more nuanced way of expressing without asserting:
+- If both triples (1 and 2) are ranked as Normal, they are two Named Graphs (both asserted ).
+- If both triples (1 and 2) are ranked as Preferred, they are two Collapsed Conjectures (both asserted).
+- If both triples (1 and 2) are ranked as Deprecated, they are two Conjectures (both non-asserted).
+- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is Collapsed Conjecture (asserted) and the second (2) is a Conjecture (non-asserted).
+- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) is a Conjecture (non-asserted) and the second (2) is a Named Graph (asserted).
+- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (asserted).
+
+In the table below we provide some data about our datasets. At the end of this process, we obtained 18 new method-specific datasets. In other words, for each dataset $Dn, \; n \in [1, 3]$, we constructed the following datasets:
 
 | **name**           | **Serialization** | **Reification**             | **EWA**         | **# RDF stmts in D3** |
 |-------------------|-------------------|-----------------------------|-----------------|-----------------------|
@@ -76,20 +98,6 @@ We converted Wikidata JSON files into the six selected reification methods throu
 | Dn-nGraphs        | TriG              | Named graphs                | via ranking     | 28,896,268           |
 | Dn-conjWeak       | TriG              | Conjectures - weak form     | yes             | 29,199,650           |
 | Dn-Singleton      | Turtle            | Singleton properties        | yes             | 55,325,270           |
-
-
-<!-- TOC --><a name="conversion-rationale"></a>
-### Assertion vs. Non-Assertion Logic
-In Wikidata, assertion or non assertion of claims is strictly dependent from their rankings.
-
-For example, the triples (1)```wd:Q10743 wdt:P214 "249422654"``` and (2)```wd:Q10743 wdt:P214 "315523483"``` share the same subject-predicate values, but differ wrt their objects.
-
-- If both triples (1 and 2) are ranked as Normal, they are both asserted.
-- If both triples (1 and 2) are ranked as Preferred, they are both asserted.
-- If both triples (1 and 2) are ranked as Deprecated, they are both non-asserted.
-- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is asserted and the second (2) is non-asserted.
-- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) in non-asserted and the second (2) is asserted.
-- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is non-asserted and the second (2) is asserted.
 
 <!-- TOC --><a name="additional-materials"></a>
 ### Additional materials
