@@ -1,0 +1,95 @@
+{{#with this as | main | }}
+        {{#each labels as |label|}}
+#   wd:{{main.id}}: {{{deldq label.value}}} ({{uc label.language}})
+        {{/each}}
+
+        {{#each labels as |label|}}
+wd:{{main.id}} rdfs:label "{{{deldq label.value}}}"@{{label.language}} ;
+	skos:prefLabel "{{{deldq label.value}}}"@{{label.language}} ;
+	schema:name "{{{deldq label.value}}}"@{{label.language}} .
+        {{/each}}
+
+        {{#each descriptions as |d|}}
+wd:{{main.id}} schema:description "{{{deldq d.value}}}"@{{d.language}}.
+        {{/each}}
+
+        {{#each aliases}}
+                {{#each this as | alias |}}
+wd:{{main.id}} skos:altLabel "{{{deldq alias.value}}}"@{{alias.language}}.
+                {{/each}}
+        {{/each}}
+
+        {{#each claims}}
+
+                {{#if (allNormals this) }}
+                
+                        {{#if (AllNoQualifiers this)}}
+GRAPH s:{{rd this.[0].id}} {
+                                {{#each this as | statement | }}
+        wd:{{main.id}} wdt:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}}.
+                                {{/each}}
+}
+                                {{#each this.[0].qualifiers}}
+                                        {{#each this as |q|}}
+                                                {{#ifEquals q.property 'P248'}}
+s:{{rd ../../this.[0].id}} pq:{{q.property}} {{{q.datavalue.value.id}}};
+                                                {{else}}
+s:{{rd ../../this.[0].id}} pq:{{this.property}} {{{dataValue this.datavalue}}}.
+                                                {{/ifEquals}}
+                                        {{/each}}
+                                {{/each}}
+s:{{rd this.[0].id}} wikibase:rank wikibase:DeprecatedRank.
+                        {{else}}
+                                {{#if (AllSameQualifiers this)}}
+GRAPH s:{{rd this.[0].id}} {
+                                        {{#each this as | statement | }}
+        wd:{{main.id}} wdt:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}}.
+                                        {{/each}}
+} 
+                                        {{#each this.[0].qualifiers}}
+                                                {{#each this as |q|}}
+                                                        {{#ifEquals q.property 'P248'}}
+s:{{rd ../../this.[0].id}} pq:{{q.property}} {{{q.datavalue.value.id}}};
+                                                        {{else}}
+s:{{rd ../../this.[0].id}} pq:{{this.property}} {{{dataValue this.datavalue}}}.
+                                                        {{/ifEquals}}
+                                                {{/each}}
+                                        {{/each}}
+s:{{rd this.[0].id}} wikibase:rank wikibase:DeprecatedRank.
+                                {{else}}
+                                        {{#each this as | statement |}} 
+GRAPH s:{{rd statement.id}}  {
+        wd:{{main.id}} wdt:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}}.
+}
+                                                {{#each qualifiers}}
+                                                        {{#each this as |q|}}
+                                                                {{#ifEquals q.property 'P248'}}
+s:{{rd statement.id}} pq:{{q.property}} {{{q.datavalue.value.id}}};
+                                                                {{else}}
+s:{{rd statement.id}} pq:{{q.property}} {{{dataValue q.datavalue}}};
+                                                                {{/ifEquals}}   
+                                                        {{/each}}
+                                                {{/each}}
+s:{{rd statement.id}} wikibase:rank wikibase:DeprecatedRank.
+                                        {{/each}}
+                                {{/if}}
+                        {{/if}}
+                {{else}}
+                        {{#each this as | statement |}}
+GRAPH s:{{rd statement.id}} { 
+        wd:{{main.id}} wdt:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}} 
+}
+                                {{#each qualifiers}}
+                                        {{#each this as |q|}}
+                                                {{#ifEquals q.property 'P248'}}
+s:{{rd statement.id}} pq:{{q.property}} {{{q.datavalue.value.id}}};
+                                                {{else}}
+s:{{rd statement.id}} pq:{{q.property}} {{{dataValue q.datavalue}}};
+                                                {{/ifEquals}}   
+                                        {{/each}}
+                                {{/each}}
+s:{{rd statement.id}} wikibase:rank wikibase:DeprecatedRank.
+                        {{/each}}  
+                {{/if}}
+        {{/each}}
+{{/with}}

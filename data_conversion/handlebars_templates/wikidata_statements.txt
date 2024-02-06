@@ -1,0 +1,60 @@
+{{#with this as | main | }}
+{{#each labels as |label|}}
+#   wd:{{main.id}}: {{{deldq label.value}}} ({{uc label.language}})
+{{/each}}
+
+{{#each labels as |label|}}
+wd:{{main.id}} rdfs:label "{{{deldq label.value}}}"@{{label.language}} ;
+	skos:prefLabel "{{{deldq label.value}}}"@{{label.language}} ;
+	schema:name "{{{deldq label.value}}}"@{{label.language}} .
+{{/each}}
+
+{{#each descriptions as |d|}}
+wd:{{main.id}} schema:description "{{{deldq d.value}}}"@{{d.language}}.
+{{/each}}
+
+{{#each aliases}}
+{{#each this as | alias |}}
+wd:{{main.id}} skos:altLabel "{{{deldq alias.value}}}"@{{alias.language}}.
+{{/each}}
+{{/each}}
+
+   {{#each claims}}
+      {{#if (allNormals this) }}
+        {{#each this as | statement |}}
+wd:{{main.id}} wdt:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}}.
+   {{/each}}
+{{/if}}
+
+{{#if (hasPreferred this) }}
+   {{#each this as | statement |}}
+      {{#if (isPreferred statement) }}
+wd:{{main.id}} wdt:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}}.
+      {{/if}}
+   {{/each}}
+{{else}}
+{{#if (hasDeprecated this) }}
+   {{#each this as | statement |}}
+      {{#if (isNormal statement) }}
+wd:{{main.id}} wdt:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}}.
+      {{/if}}
+   {{/each}}
+{{/if}}
+
+{{/if}}
+
+
+{{#each this as | statement |}}
+wd:{{main.id}} p:{{statement.mainsnak.property}} s:{{rd statement.id}} .
+s:{{rd statement.id}} a wikibase:Statement; 
+{{#each qualifiers}}
+{{#each this as |q|}}
+    pq:{{q.property}} {{{dataValue q.datavalue}}};
+{{/each}}
+{{/each}}
+    ps:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}};
+     wikibase:rank wikibase:{{tc rank}}Rank.
+{{/each}}
+   
+{{/each}}
+{{/with}}

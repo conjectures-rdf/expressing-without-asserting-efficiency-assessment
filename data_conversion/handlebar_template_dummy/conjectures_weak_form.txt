@@ -1,0 +1,143 @@
+{{#with this as | main | }}
+        {{#each labels as |label|}}
+#   wd:{{main.id}}: {{{deldq label.value}}} ({{uc label.language}})
+        {{/each}}
+        {{#each labels as |label|}}
+wd:{{main.id}} rdfs:label "{{{deldq label.value}}}"@{{label.language}} ;
+	skos:prefLabel "{{{deldq label.value}}}"@{{label.language}} ;
+        schema:name "{{{deldq label.value}}}"@{{label.language}} .
+        {{/each}}
+        {{#each descriptions as |d|}}
+wd:{{main.id}} schema:description "{{{deldq d.value}}}"@{{d.language}}.
+        {{/each}}
+        {{#each aliases}}
+                {{#each this as | alias |}}
+wd:{{main.id}} skos:altLabel "{{{deldq alias.value}}}"@{{alias.language}}.
+                {{/each}}
+        {{/each}}
+
+        {{#each claims}}
+                {{#if (allNormals this) }}
+                        {{#if (AllNoQualifiers this)}}
+GRAPH s:{{rd this.[0].id}} {
+                                {{#each this as | statement | }}
+wd:{{main.id}} <http://w3id.org/conj-wikidata-test/conj/{{../this.[0].id}}/{{statement.mainsnak.property}}> {{{dataValue statement.mainsnak.datavalue}}}.
+<http://w3id.org/conjectures/{{../this.[0].id}}/{{statement.mainsnak.property}}> conj:isAConjecturalFormOf wdt:{{statement.mainsnak.property}} .  
+                                  
+                                {{/each}}
+}
+                                {{#each this.[0].qualifiers}}
+                                    {{#each this as |q|}}
+                                        {{#ifEquals q.property 'P248'}}
+s:{{rd ../../this.[0].id}} pq:{{q.property}} {{{q.datavalue.value.id}}}.
+                                        {{else}}
+s:{{rd ../../this.[0].id}} pq:{{this.property}} {{{dataValue this.datavalue}}}.
+                                        {{/ifEquals}}
+                                    {{/each}}
+                                {{/each}}
+s:{{rd this.[0].id}} wikibase:rank wikibase:DeprecatedRank.
+                        {{else}}
+                                {{#if (AllSameQualifiers this)}}
+GRAPH s:{{rd this.[0].id}} {
+                                        {{#each this as | statement | }}
+wd:{{main.id}} <http://w3id.org/conj-wikidata-test/conj/{{../this.[0].id}}/{{statement.mainsnak.property}}> {{{dataValue statement.mainsnak.datavalue}}}.
+<http://w3id.org/conjectures/{{../this.[0].id}}/{{statement.mainsnak.property}}> conj:isAConjecturalFormOf wdt:{{statement.mainsnak.property}} .  
+                                
+                                        {{/each}}
+} 
+                                        {{#each this.[0].qualifiers}}
+                                                {{#each this as |q|}}
+                                                    {{#ifEquals q.property 'P248'}}
+s:{{rd ../../this.[0].id}} pq:{{q.property}} {{{q.datavalue.value.id}}}.
+                                                        {{else}}
+s:{{rd ../../this.[0].id}} pq:{{this.property}} {{{dataValue this.datavalue}}}.
+                                                    {{/ifEquals}}
+                                                {{/each}}
+                                        {{/each}}
+s:{{rd this.[0].id}} wikibase:rank wikibase:DeprecatedRank.
+                                {{else}}
+                                        {{#each this as | statement |}} 
+GRAPH s:{{rd statement.id}}  {
+        wd:{{main.id}} <http://w3id.org/conj-wikidata-test/conj/{{statement.id}}/{{statement.mainsnak.property}}> {{{dataValue statement.mainsnak.datavalue}}}.
+	<http://w3id.org/conjectures/{{statement.id}}/{{statement.mainsnak.property}}> conj:isAConjecturalFormOf wdt:{{statement.mainsnak.property}} .  
+} 
+                                                {{#each qualifiers}}
+                                                        {{#each this as |q|}}
+                                                            {{#ifEquals q.property 'P248'}}
+s:{{rd statement.id}} pq:{{q.property}} {{{q.datavalue.value.id}}}.
+                                                            {{else}}
+s:{{rd statement.id}} pq:{{q.property}} {{{dataValue q.datavalue}}}.
+                                                            {{/ifEquals}}
+                                                        {{/each}}
+                                                {{/each}}
+s:{{rd statement.id}} wikibase:rank wikibase:DeprecatedRank.
+                                        {{/each}}
+                                {{/if}}
+                        {{/if}}
+                {{/if}}
+
+                {{#if (hasPreferred this) }}
+                        {{#each this as | statement |}}
+                                {{#if (isPreferred statement) }}
+GRAPH s:{{rd statement.id}}  {
+        wd:{{main.id}} <http://w3id.org/conj-wikidata-test/conj/{{statement.id}}/{{statement.mainsnak.property}}> {{{dataValue statement.mainsnak.datavalue}}}.
+	<http://w3id.org/conjectures/{{statement.id}}/{{statement.mainsnak.property}}> conj:isAConjecturalFormOf wdt:{{statement.mainsnak.property}} .  
+}                                             
+GRAPH s:collapseOf{{rd statement.id}}{
+        wd:{{main.id}} wdt:{{statement.mainsnak.property}} {{{dataValue statement.mainsnak.datavalue}}}.
+        s:collapseOf{{rd statement.id}} conj:collapses s:{{rd statement.id}} 
+}
+                                {{/if}}
+                                {{#if (isNormal statement) }}
+GRAPH s:{{rd statement.id}}  {
+        wd:{{main.id}} <http://w3id.org/conj-wikidata-test/conj/{{statement.id}}/{{statement.mainsnak.property}}> {{{dataValue statement.mainsnak.datavalue}}}.
+	<http://w3id.org/conjectures/{{statement.id}}/{{statement.mainsnak.property}}> conj:isAConjecturalFormOf wdt:{{statement.mainsnak.property}} .  
+} 
+                                {{/if}}
+                                        {{#if (isDeprecated statement) }}
+GRAPH s:{{rd statement.id}}  {
+        wd:{{main.id}} <http://w3id.org/conj-wikidata-test/conj/{{statement.id}}/{{statement.mainsnak.property}}> {{{dataValue statement.mainsnak.datavalue}}}.
+	<http://w3id.org/conjectures/{{statement.id}}/{{statement.mainsnak.property}}> conj:isAConjecturalFormOf wdt:{{statement.mainsnak.property}} .  
+} 
+                                {{/if}}
+                        {{#each qualifiers}}
+                                {{#each this as |q|}}
+                                    {{#ifEquals q.property 'P248'}}
+s:{{rd statement.id}} pq:{{q.property}} {{{q.datavalue.value.id}}}.
+                                    {{else}}
+s:{{rd statement.id}} pq:{{q.property}} {{{dataValue q.datavalue}}}.
+                                    {{/ifEquals}}     
+                                {{/each}}
+                        {{/each}}
+s:{{rd statement.id}} wikibase:rank wikibase:DeprecatedRank.   
+                        {{/each}}
+                {{else}}
+                        {{#if (hasDeprecated this) }}
+                                {{#each this as | statement |}}
+                                        {{#if (isNormal statement) }}
+GRAPH s:{{rd statement.id}}  {
+        wd:{{main.id}} <http://w3id.org/conj-wikidata-test/conj/{{statement.id}}/{{statement.mainsnak.property}}> {{{dataValue statement.mainsnak.datavalue}}}.
+	<http://w3id.org/conjectures/{{statement.id}}/{{statement.mainsnak.property}}> conj:isAConjecturalFormOf wdt:{{statement.mainsnak.property}} .  
+}            
+                                        {{/if}}
+                                        {{#if (isDeprecated statement) }}
+GRAPH s:{{rd statement.id}}  {
+        wd:{{main.id}} <http://w3id.org/conj-wikidata-test/conj/{{statement.id}}/{{statement.mainsnak.property}}> {{{dataValue statement.mainsnak.datavalue}}}.
+	<http://w3id.org/conjectures/{{statement.id}}/{{statement.mainsnak.property}}> conj:isAConjecturalFormOf wdt:{{statement.mainsnak.property}} .  
+} 
+                                        {{/if}}
+                                        {{#each qualifiers}}
+                                             {{#each this as |q|}}
+                                                {{#ifEquals q.property 'P248'}}
+s:{{rd statement.id}} pq:{{q.property}} {{{q.datavalue.value.id}}}.
+                                                {{else}}
+s:{{rd statement.id}} pq:{{q.property}} {{{dataValue q.datavalue}}}.
+                                                {{/ifEquals}}                                             
+                                            {{/each}}
+                                        {{/each}}
+s:{{rd statement.id}} wikibase:rank wikibase:DeprecatedRank.   
+                                {{/each}}
+                        {{/if}}
+                {{/if}}
+        {{/each}}
+{{/with}}
