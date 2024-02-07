@@ -73,12 +73,14 @@ We converted Wikidata JSON files into the six selected reification methods in or
 In Wikidata, assertion or non-assertion of claims is strictly dependent on their rankings. Ranking information is present in the JSON files, so we established a logic to reconstruct the assertion/non assertion logic to mimic Wikidata RDF statements.
 
 For example, the triples (1) ```wd:Q10743 wdt:P214 "249422654"``` and (2) ```wd:Q10743 wdt:P214 "315523483"``` share the same subject-predicate values, but differ wrt their objects.
-- If both triples (1 and 2) are ranked as Normal, they are both asserted.
-- If both triples (1 and 2) are ranked as Preferred, they are both asserted.
-- If both triples (1 and 2) are ranked as Deprecated, they are both non-asserted.
-- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is asserted and the second (2) is non-asserted.
-- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) in non-asserted and the second (2) is asserted.
-- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is non-asserted and the second (2) is asserted.
+| Triple 1 | Triple 2 | Assertion Status |
+|----------|----------|------------------|
+| Normal   | Normal   | Asserted         |
+| Preferred| Preferred| Asserted         |
+| Deprecated | Deprecated | Non-asserted  |
+| Preferred| Normal   | Triple 1: Asserted <br> Triple 2: Non-asserted |
+| Deprecated | Normal | Triple 1: Non-asserted <br> Triple 2: Asserted |
+| Deprecated | Preferred | Triple 1: Non-asserted <br> Triple 2: Asserted |
 
 In the case of Conjectures (both strong and weak form) this logic is slightly different due to a more nuanced way of expressing without asserting:
 - If both triples (1 and 2) are ranked as Normal, they are two Named Graphs (both asserted ).
