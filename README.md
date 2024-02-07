@@ -73,7 +73,7 @@ We converted Wikidata JSON files into the six selected reification methods in or
 In Wikidata, assertion or non-assertion of claims is strictly dependent on their rankings. Ranking information is present in the JSON files, so we established a logic to reconstruct the assertion/non assertion logic to mimic Wikidata RDF statements.
 
 For example, the triples (1) ```wd:Q10743 wdt:P214 "249422654"``` and (2) ```wd:Q10743 wdt:P214 "315523483"``` share the same subject-predicate values, but differ wrt their objects.
-| Triple 1 | Triple 2 | Assertion Status |
+| Ranking for <br> triple 1 | Ranking for <br> triple 2 | Assertion Status |
 |----------|----------|------------------|
 | Normal   | Normal   | Asserted         |
 | Preferred| Preferred| Asserted         |
@@ -83,14 +83,14 @@ For example, the triples (1) ```wd:Q10743 wdt:P214 "249422654"``` and (2) ```wd:
 | Deprecated | Preferred | Triple 1: Non-asserted <br> Triple 2: Asserted |
 
 In the case of Conjectures (both strong and weak form) this logic is slightly different due to a more nuanced way of expressing without asserting:
-| Triple 1   | Triple 2   | Graph Type                      |
-|------------|------------|---------------------------------|
-| Normal     | Normal     | Named Graph	                    |
-| Preferred  | Preferred  | Collapsed Conjectures           |
-| Deprecated | Deprecated | Conjectures                     |
-| Preferred  | Normal     | Triple 1: Collapsed Conjecture <br> Triple 2: Conjecture |
-| Deprecated | Normal     | Triple 1: Conjecture <br> Triple 2: Collapsed Conjecture |
-| Deprecated | Preferred  | Triple 1: Conjecture <br> Triple 2: Collapsed Conjecture |
+| Triple 1   | Triple 2   | Graph Type                      | Assertion status |
+|------------|------------|---------------------------------|------------------|
+| Normal     | Normal     | Named Graph	                    | Asserted |
+| Preferred  | Preferred  | Collapsed Conjectures           | Asserted + non-asserted |
+| Deprecated | Deprecated | Conjectures                     | Non-asserted |
+| Preferred  | Normal     | Triple 1: Collapsed Conjecture <br> Triple 2: Conjecture | Triple 1: Asserted + non-asserted <br> Triple 2: Non-asserted |
+| Deprecated | Normal     | Triple 1: Conjecture <br> Triple 2: Collapsed Conjecture | Triple 1: Non-asserted <br> Triple 2:  Asserted + non-asserted  |
+| Deprecated | Preferred  | Triple 1: Conjecture <br> Triple 2: Collapsed Conjecture | Triple 1: Non-asserted <br> Triple 2:  Asserted + non-asserted  |
 
 ### Converting JSON files via Wikidata Converter App
 - The assertion vs non-assertion logic has been translated into a set of templates each of which has been customised to convert the JSON files in $Dn, \; n \in [1, 3]$ in one of the selected EWA approaches. Such templates are written in [Handelbars syntax](https://handlebarsjs.com/). All templates are available in ```data_conversion/handlebars_templates```. This set of templates has been used to convert **Art** and **Random** claims.
