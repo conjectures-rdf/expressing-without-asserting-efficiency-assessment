@@ -25,7 +25,7 @@ This repository contains all files to evaluate Expressing Without Asserting (EWA
 
 This project can be summarised as follows and it is explained in this README.md file.
 
-![EWA efficiency tests workflow](documentation/ewa_efficiency_workflow.pdf)
+![EWA efficiency tests workflow](documentation/ewa_efficiency_workflow.png)
 
 ## Data acquisition
 
