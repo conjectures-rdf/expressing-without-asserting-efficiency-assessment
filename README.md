@@ -335,6 +335,38 @@ s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 wikibase:rank wikibase:PreferredRank
 ## GraphDB costumisation and setup
 The complete documentation of GraphDB costumisation and setup can be found at: [GraphDB-conjectures-strong-parser](https://github.com/conjectures-rdf/GraphDB-conjectures-strong-parser)
 
+## Queries definition
+
+The following queries mimic all **Assertion status** which has been defined in **Assertion vs. Non-assertion logic**. 
+
+| Query | Predicate | Data selected by query |
+|-------|-----------|------------------------|
+| GQ1   | P170      | All attributions of artworks that are currently considered valid |
+| GQ1   | P276      | All locations of artworks that are currently considered valid |
+| GQ2   | P170      | All attributions of artworks that have been debated |
+| GQ2   | P276      | All past and debated locations of artworks |
+| GQ3   | P170      | All attributions of artworks that have been debated, *with provenance* |
+| GQ3   | P276      | All past and debated locations of artworks, *with date of move* |
+| GQ4   | P170      | All currently debated attributions of artworks |
+| GQ4   | P276      | All locations of artworks whose current location is uncertain |
+| GQ5   | P170      | All settled attributions of artworks |
+| GQ5   | P276      | All current locations of artworks that were moved |
+| GQ6   | P170      | All attributions of artworks that were never debated |
+| GQ6   | P276      | All locations of artworks that never moved |
+| FQ1   | P170      | All attributions of paintings (Q3305213) that currently are considered valid |
+| FQ1   | P276      | All locations of paintings (Q3305213) that are currently considered valid |
+| FQ2   | P170      | All attributions of paintings (Q3305213) that have been debated |
+| FQ2   | P276      | All past and debated locations of paintings (Q3305213) |
+| FQ3   | P170      | All attributions of paintings (Q3305213) that have been debated, *with provenance* |
+| FQ3   | P276      | All past and debated locations of paintings (Q3305213), *with date of move* |
+| FQ4   | P170      | All currently debated attributions of paintings (Q3305213) |
+| FQ4   | P276      | All locations of paintings (Q3305213) whose current location is uncertain |
+| FQ5   | P170      | All settled attributions of paintings (Q3305213) |
+| FQ5   | P276      | All current locations of paintings (Q3305213) that were moved |
+| FQ6   | P170      | All attributions of paintings (Q3305213) that were never debated |
+| FQ6   | P276      | All locations of paintings (Q3305213) that never moved |
+
+
 ## Experiment reproducibility
 
 To run the experiments take the following steps:
