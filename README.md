@@ -83,12 +83,14 @@ For example, the triples (1) ```wd:Q10743 wdt:P214 "249422654"``` and (2) ```wd:
 | Deprecated | Preferred | Triple 1: Non-asserted <br> Triple 2: Asserted |
 
 In the case of Conjectures (both strong and weak form) this logic is slightly different due to a more nuanced way of expressing without asserting:
-- If both triples (1 and 2) are ranked as Normal, they are two Named Graphs (both asserted ).
-- If both triples (1 and 2) are ranked as Preferred, they are two Collapsed Conjectures (both asserted).
-- If both triples (1 and 2) are ranked as Deprecated, they are two Conjectures (both non-asserted).
-- If triple (1) is ranked as Preferred and triple (2) is ranked as Normal, the first (1) is Collapsed Conjecture (both asserted and non-asserted) and the second (2) is a Conjecture (non-asserted).
-- If triple (1) is ranked as Deprecated and triple (2) is ranked as Normal, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (both asserted and non-asserted).
-- If triple (1) is ranked as Deprecated and triples (2) is ranked as Preferred, the first (1) is a Conjecture (non-asserted) and the second (2) is a Collapsed Conjecture (both asserted and non-asserted).
+| Triple 1   | Triple 2   | Graph Type                      |
+|------------|------------|---------------------------------|
+| Normal     | Normal     | Named Graph	                    |
+| Preferred  | Preferred  | Collapsed Conjectures           |
+| Deprecated | Deprecated | Conjectures                     |
+| Preferred  | Normal     | Triple 1: Collapsed Conjecture <br> Triple 2: Conjecture |
+| Deprecated | Normal     | Triple 1: Conjecture <br> Triple 2: Collapsed Conjecture |
+| Deprecated | Preferred  | Triple 1: Conjecture <br> Triple 2: Collapsed Conjecture |
 
 ### Converting JSON files via Wikidata Converter App
 - The assertion vs non-assertion logic has been translated into a set of templates each of which has been customised to convert the JSON files in $Dn, \; n \in [1, 3]$ in one of the selected EWA approaches. Such templates are written in [Handelbars syntax](https://handlebarsjs.com/). All templates are available in ```data_conversion/handlebars_templates```. This set of templates has been used to convert **Art** and **Random** claims.
