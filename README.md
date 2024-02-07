@@ -329,6 +329,7 @@ s:Q183-0B26503A-A8BF-4B40-9F0A-CAE242AE03A1 wikibase:rank wikibase:PreferredRank
 ```
 <!-- TOC --><a name="graphdb-costumisation-and-setup"></a>
 ## GraphDB costumisation and setup
+The complete documentation of GraphDB costumisation and setup can be found at: [GraphDB-conjectures-strong-parser](https://github.com/conjectures-rdf/GraphDB-conjectures-strong-parser)
 
 ## Experiment reproducibility
 
