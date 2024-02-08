@@ -55,7 +55,7 @@ The following queries mimic all **Assertion status** which has been defined in *
 | FQ6   | P276      | All locations of paintings (Q3305213) that never moved |
 
 
-## Experiment reproducibility
+## Experiment reproducibility on your local machine
 
 To run the experiments take the following steps:
 - Run locally one of the two available dockers:
