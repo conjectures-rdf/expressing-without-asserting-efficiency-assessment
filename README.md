@@ -2,19 +2,12 @@
 
 This repository contains all files to evaluate Expressing Without Asserting (EWA) approaches in RDF.
 
+![EWA efficiency tests workflow](documentation/ewa_efficiency_workflow_tests.png)
+
 <!-- TOC start (generated with https://github.com/derlin/bitdowntoc) -->
 
 - [EWA-efficiency](#ewa-efficiency)
-   * [Data Acquisition, scaling and conversion](#data-acquisition-scaling-and-conversion)
-      + [Conversion rationale](#conversion-rationale)
-      + [Additional materials](#additional-materials)
-      + [Converting JSON files via Wikidata Converter App](#converting-json-files-via-wikidata-converter-app)
-      + [Example output RDF files out of handlebars templates](#example-output-rdf-files-out-of-handlebars-templates)
-         - [Wikidata ](#wikidata)
-         - [Named Graphs](#named-graphs)
-         - [Singleton Properties](#singleton-properties)
-         - [RDF-star (RDF 1.1 syntax extension)](#rdf-star-rdf-11-syntax-extension)
-         - [Conjectures (weak form)](#conjectures-weak-form)
+   * [
    * [GraphDB costumisation and setup](#graphdb-costumisation-and-setup)
 
 <!-- TOC end -->
@@ -23,6 +16,8 @@ This repository contains all files to evaluate Expressing Without Asserting (EWA
 
 <!-- TOC --><a name="data-acquisition-scaling-and-conversion"></a>
 
+## Data preparation
+This part of the workflow is documented in a separate repository available at [conjectures-rdf/expressing-without-asserting-efficiency-datasets](https://github.com/conjectures-rdf/expressing-without-asserting-efficiency-datasets)
 
 <!-- TOC --><a name="graphdb-costumisation-and-setup"></a>
 ## GraphDB costumisation and setup
