@@ -14,7 +14,7 @@ Tests have been run on a computer with processor Intel Core i5-8259U CPU @ 2.30G
 The complete documentation of GraphDB costumisation and setup can be found at: [GraphDB-conjectures-strong-parser](https://github.com/conjectures-rdf/GraphDB-conjectures-strong-parser)
 
 ## Queries definition
-The following queries mimic all **Assertion status** which has been defined in **Assertion vs. Non-assertion logic**. 
+The following queries mimic all **Assertion status** which has been defined in [**Assertion vs. Non-assertion logic**](github.com/conjectures-rdf/expressing-without-asserting-efficiency-datasets/README.md#conversion-rationale). 
 
 | Query | Predicate | Data selected by query |
 |-------|-----------|------------------------|
