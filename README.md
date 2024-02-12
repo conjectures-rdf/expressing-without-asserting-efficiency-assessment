@@ -45,10 +45,16 @@ The following queries mimic all **Assertion status** which has been defined in [
 | FQ6   | P170      | All attributions of paintings (Q3305213) that were never debated |
 | FQ6   | P276      | All locations of paintings (Q3305213) that never moved |
 
-## Results
+## Test results and visualisations
+All contents are stored in the results folder.
+
+### Test results
 **Query responses** results are available in the `query_execution_response` folder, which contains two subfolders:
 - `partial_results` contains 10 runs for each query
 -  `final_results` contains the average of the 10 runs
+
+### Visualisations
+- All results visualisations are produced by `EWA_efficiency_charts.ipynb` 
 
 ## Experiment reproducibility on your local machine
 To run the experiments take the following steps:
