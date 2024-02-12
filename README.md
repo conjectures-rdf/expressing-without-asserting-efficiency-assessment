@@ -43,6 +43,9 @@ The following queries mimic all **Assertion status** which has been defined in [
 | FQ6   | P170      | All attributions of paintings (Q3305213) that were never debated |
 | FQ6   | P276      | All locations of paintings (Q3305213) that never moved |
 
+**Query responses** results are available in the `query_execution_response` folder, which contains two subfolders:
+- `partial_results` contains 10 runs for each query
+-  `final_results` contains the average of the 10 runs
 
 ## Experiment reproducibility on your local machine
 To run the experiments take the following steps:
