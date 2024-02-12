@@ -45,8 +45,13 @@ The following queries mimic all **Assertion status** which has been defined in [
 | FQ6   | P170      | All attributions of paintings (Q3305213) that were never debated |
 | FQ6   | P276      | All locations of paintings (Q3305213) that never moved |
 
+All queries in SPARQL are available in `queries` folder:
+- `generale_queries.json` contains GQ\[1:6\] for both P170 and P276 properties
+- `filtered_queries.json` contains FQ\[1:6\] for both P170 and P276 properties
+- `GraphDB_query_runner.py` runs authomatically a selected json file
+
 ## Test results and visualisations
-All contents are stored in the results folder.
+All contents are stored in the `results` folder.
 
 ### Test results
 **Query responses** results are available in the `query_execution_response` folder, which contains two subfolders:
