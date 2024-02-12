@@ -13,7 +13,9 @@ Tests have been run on a computer with processor Intel Core i5-8259U CPU @ 2.30G
 ## GraphDB costumisation and setup (to parse Conjectures)
 The complete documentation of GraphDB costumisation and setup can be found at: [GraphDB-conjectures-strong-parser](https://github.com/conjectures-rdf/GraphDB-conjectures-strong-parser)
 
-## Queries definition
+## Metrics definition
+
+### Queries definition
 The following queries mimic all **Assertion status** which has been defined in [**Assertion vs. Non-assertion logic**](https://github.com/conjectures-rdf/expressing-without-asserting-efficiency-datasets). 
 
 | Query | Predicate | Data selected by query |
@@ -43,6 +45,7 @@ The following queries mimic all **Assertion status** which has been defined in [
 | FQ6   | P170      | All attributions of paintings (Q3305213) that were never debated |
 | FQ6   | P276      | All locations of paintings (Q3305213) that never moved |
 
+## Results
 **Query responses** results are available in the `query_execution_response` folder, which contains two subfolders:
 - `partial_results` contains 10 runs for each query
 -  `final_results` contains the average of the 10 runs
