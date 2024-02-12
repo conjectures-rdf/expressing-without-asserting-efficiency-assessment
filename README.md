@@ -1,15 +1,25 @@
 # Benchmarking Expressing Without Asserting methods on large Wikidata Dumps
 ## Notes on Efficiency Test setup and results
+
 ![EWA efficiency tests workflow](documentation/ewa_efficiency_workflow_tests.png)
 
+# Table of Contents
+- [Data preparation](#data-preparation)
+- [Hardware and Software Configuration](#hardware-and-software-configuration)
+- [GraphDB costumisation and setup (to parse Conjectures)](#graphdb-costumisation-and-setup-to-parse-conjectures)
+- [Metrics definition](#metrics-definition)
+  - [Queries definition](#queries-definition)
+- [Test results and visualisations](#test-results-and-visualisations)
+  - [Test results](#test-results)
+  - [Visualisations](#visualisations)
+- [Experiment reproducibility on your local machine](#experiment-reproducibility-on-your-local-machine)
 
 ## Data preparation
 This part of the workflow is documented in a separate repository available at [conjectures-rdf/expressing-without-asserting-efficiency-datasets](https://github.com/conjectures-rdf/expressing-without-asserting-efficiency-datasets)
 
- ## Hardware and Software Configuration
+## Hardware and Software Configuration
 Tests have been run on a computer with processor Intel Core i5-8259U CPU @ 2.30GHz 2.30 GHz, RAM 32,0 GB, Windows 10 pro 64 bits, 1T hard disk. The TriG and SparQL parsers of our GraphDB engine were modified to parse Conjectures in strong form (see [next section](#graphdb-costumisation-and-setup)). The configuration of the GraphDB instance used for these experiments uses 28G Ram allocated to the application (for more information see [ref])(https://graphdb.ontotext.com/documentation/10.1/configuring-graphdb-memory.html), [ref](https://graphdb.ontotext.com/documentation/10.2/getting-started.html\#:\~:text=the\%20aforementioned\%20icon.-), (ref)[Configuring\%20the\%20JVM,Contents\%2Fapp\%2FGraphDB\%20Desktop]}, and 10G cache size. A repository has been created for each dataset with inferences off, no rule set assigned, predicates list index enabled and (when possible) contexts enabled. All other parameters are left in their default values. Repositories are already running before their performance tests are executed.
 
-<!-- TOC --><a name="graphdb-costumisation-and-setup"></a>
 ## GraphDB costumisation and setup (to parse Conjectures)
 The complete documentation of GraphDB costumisation and setup can be found at: [GraphDB-conjectures-strong-parser](https://github.com/conjectures-rdf/GraphDB-conjectures-strong-parser)
 
@@ -64,10 +74,4 @@ All contents are stored in the `results` folder.
 ## Experiment reproducibility on your local machine
 To run the experiments take the following steps:
 - Run locally one of the two available dockers:
-  - ```docker push valentinamomo/conjectures-graphdb-ewa-rtr:tagname```: This docker is **ready to run (RTR)** and can be mounted locally in few minutes. It contains a customised instance of GraphDB to parse and read Conjectures and 10 preloaded datasets to compare its efficiency with concurrent approaches. In particular, this instance contains Wikidata statements, RDF-star, Named Graphs, Conjectures in Weak form, Conjectures in strong form each of which comes in two sizes (D1 and D2). It requires 20GB of free memory space to be used.
-  - ```tbd```: This docker is **slow to run (STR)** and can be mounted locally in some hours. It contains a customised instance of GraphDB to parse and read Conjectures and 18 preloaded datasets to compare its efficiency with concurrent approaches. In particular, this instance contains Wikidata statements, RDF-star, Named Graphs, Singleton Properties, Conjectures in Weak form, Conjectures in strong form each of which comes in three sizes (D1, D2 and D3). It requires 0.5T of free memory space to be used.
-  - Modifications of GraphDB instances in the dockers are stored in ```conjectures-extension-graphdb```
-
-- Run locally the code provided in ```XXX``` and locate the ```queries``` in the same folder.
-  - ```queries``` contains the set of queries designed for this experiment and the code to run them
-  - ```query_exectution_response``` contains partial and final results of query runs which come from this test attempt.
+  - ```docker push valentinamomo/conjectures-graphdb-ewa-rtr:tagname```: This docker is **ready to run (RTR)** and can be mounted locally in few minutes. It contains a customised instance of GraphDB to parse and read Conjectures
