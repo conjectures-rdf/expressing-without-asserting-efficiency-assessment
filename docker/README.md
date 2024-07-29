@@ -14,7 +14,7 @@ We produced several docker depending on the testing instance you want to run.
 |-- Dockerfile
 |-- entrypoint.sh
 |-- repositories/
-|   |-- WORK IN PROGRESS
+|   |-- 
 |-- conjectures-extension-graphdb/
 |   |-- rdf4j-queryparser-sparql-4.2.0.jar
 |   |-- rdf4j-rio-trig-4.2.0.jar
@@ -26,6 +26,8 @@ docker build -t my-custom-graphdb:1.0 .
 
 ## RUN THE DOCKER 
 docker run -p 127.0.0.1:7200:7200 --name graphdb-custom -t my-custom-graphdb:1.0
+or 
+docker run -p 127.0.0.1:7200:7200 --name graphdb-custom -t valentinamomo/conjectures-graphdb-ewa-rtr:1.0
 
 ## INSPECT THE DOCKER
 docker exec -it graphdb-custom /bin/bash
